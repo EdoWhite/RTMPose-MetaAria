@@ -128,39 +128,6 @@ def device_subscribe(streaming_client):
     streaming_client.subscribe()
     return observer
 
-def send_frame(client_socket, frame_type, frame):
-    # Send frame type (e.g., 'RGB' or 'DEPTH')
-    client_socket.sendall(frame_type)
-
-    # Send the length of the frame data
-    length = len(frame)
-    client_socket.sendall(length.to_bytes(16, 'big'))  # Send the length as 16 bytes
-
-    # Send the frame data
-    client_socket.sendall(frame)
-
-def send_frames(host, port, frame):
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect((host, port))
-
-    while not quit_keypress():
-        rgb_frame = frame
-        
-        # Encode frames before sending
-        _, encoded_rgb_frame = cv2.imencode('.jpg', rgb_frame)
-
-        # Sending RGB Frame
-        send_frame(client_socket, b'RGB', encoded_rgb_frame.tobytes())
-        print("SENT RGB")
-
-    # Sending the termination flag
-    client_socket.sendall(b'STOP')
-
-    # Receiving the inference result
-    label = client_socket.recv(1024)
-    print(f"Received label: {label.decode()}")
-
-    client_socket.close()
 
 
     # Main function
