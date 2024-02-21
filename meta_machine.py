@@ -202,3 +202,6 @@ def main():
     streaming_manager.stop_streaming()
     device_client.disconnect(device)
     sender_socket.close()
+
+if __name__ == "__main__":
+    main()
