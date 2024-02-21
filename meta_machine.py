@@ -174,7 +174,7 @@ def main():
     cv2.resizeWindow(rgb_window, 1024, 1024)
     cv2.moveWindow(rgb_window, 50, 50)
     
-    HOST, PORT = args.ip, args.port
+    HOST, PORT = args.receiver_ip, args.port
 
     sender_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sender_socket.connect((HOST, PORT))
